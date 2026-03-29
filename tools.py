@@ -33,5 +33,5 @@ class WeatherTools:
 
 weather_tools = WeatherTools()
 
-print(weather_tools.get_weather("New York"))
-print(weather_tools.get_weather("Paris"))
+# print(weather_tools.get_weather("New York"))
+# print(weather_tools.get_weather("Paris"))
