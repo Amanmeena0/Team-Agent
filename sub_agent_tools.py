@@ -1,7 +1,7 @@
 
 from typing import Optional
 
-class subTool:
+class SubTool:
     def say_hello(name: Optional[str] = None) -> str:
         """Provides a simple greeting. If a name is provided, it will be used.
 
@@ -30,3 +30,5 @@ print("Greeting and Farewell tools defined.")
 # print(say_hello("Alice"))
 # print(say_hello()) 
 # print(say_hello(name=None)) 
+
+sub_tools = SubTool()
