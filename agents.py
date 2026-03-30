@@ -64,33 +64,33 @@ runner = Runner (
 
 print(f"Runner created for agent '{runner.agent.name}'.")
 
+class AgentAsync:
+    async def call_agent_async(query: str, runner, user_id, session_id):
+        print(f"\n>>> User Query: {query}")
 
-async def call_agent_async(query: str, runner, user_id, session_id):
-    print(f"\n>>> User Query: {query}")
+        content = types.Content(role='user', parts=[types.Part(text=query)])
 
-    content = types.Content(role='user', parts=[types.Part(text=query)])
+        final_response_text = "Agent did not produce a final response."  # default
 
-    final_response_text = "Agent did not produce a final response."  # default
+        async for event in runner.run_async(
+            user_id=user_id,
+            session_id=session_id,
+            new_message=content
+        ):
+            if event.is_final_response():
+                if event.content and event.content.parts:
+                    final_response_text = event.content.parts[0].text
+                elif event.actions and event.actions.escalate:
+                    final_response_text = f"Agent escalated: {event.error_message or 'No specific message'}"
+                break
 
-    async for event in runner.run_async(
-        user_id=user_id,
-        session_id=session_id,
-        new_message=content
-    ):
-        if event.is_final_response():
-            if event.content and event.content.parts:
-                final_response_text = event.content.parts[0].text
-            elif event.actions and event.actions.escalate:
-                final_response_text = f"Agent escalated: {event.error_message or 'No specific message'}"
-            break
-
-    print(f"<<< Agent Response: {final_response_text}")
+        print(f"<<< Agent Response: {final_response_text}")
 
 
 async def run_convertsation():
-    await call_agent_async("what is the weather like in London?",runner=runner, user_id=USER_ID, session_id=SESSION_ID)
-    await call_agent_async("what is the weather like in Paris?",runner=runner, user_id=USER_ID, session_id=SESSION_ID)
-    await call_agent_async("what is the weather like in New York?",runner=runner, user_id=USER_ID, session_id=SESSION_ID)
+    await AgentAsync.call_agent_async("what is the weather like in London?",runner=runner, user_id=USER_ID, session_id=SESSION_ID)
+    await AgentAsync.call_agent_async("what is the weather like in Paris?",runner=runner, user_id=USER_ID, session_id=SESSION_ID)
+    await AgentAsync.call_agent_async("what is the weather like in New York?",runner=runner, user_id=USER_ID, session_id=SESSION_ID)
 
 
 if __name__ == "__main__":
