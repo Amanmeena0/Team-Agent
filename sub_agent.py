@@ -8,7 +8,7 @@ import asyncio
 
 class SubAgent:
     
-    def greeting_agent():
+    def greeting_agent(self):
    
         return Agent(
             model=model_registry.get_model("fast"),
@@ -22,7 +22,7 @@ class SubAgent:
             tools=[sub_tools.say_hello]
         )
 
-    def farewell_agent():
+    def farewell_agent(self):
 
         return Agent(
         model = model_registry.get_model("fast"),
