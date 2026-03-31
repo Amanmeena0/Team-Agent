@@ -13,7 +13,7 @@ greeting_agent = None
 try:
     # Use a defined model constant
     greeting_agent = Agent(
-        model=model_registry.get_model("creative"),
+        model=model_registry.get_model("fast"),
         name="greeting_agent", # Keep original name for consistency
         instruction="You are the Greeting Agent. Your ONLY task is to provide a friendly greeting using the 'say_hello' tool. Do nothing else.",
         description="Handles simple greetings and hellos using the 'say_hello' tool.",
@@ -27,7 +27,7 @@ farewell_agent = None
 try:
     # Use a defined model constant
     farewell_agent = Agent(
-        model=model_registry.get_model("creative"),
+        model=model_registry.get_model("fast"),
         name="farewell_agent", # Keep original name
         instruction="You are the Farewell Agent. Your ONLY task is to provide a polite goodbye message using the 'say_goodbye' tool. Do not perform any other actions.",
         description="Handles simple farewells and goodbyes using the 'say_goodbye' tool.",
@@ -46,7 +46,7 @@ runner_root_model_guardrail = None
 if greeting_agent and farewell_agent and 'get_weather_stateful' in globals() and 'block_keyword_guardrail' in globals():
 
     # Use a defined model constant
-    root_agent_model = model_registry.get_model("creative")
+    root_agent_model = model_registry.get_model("fast")
 
     root_agent_model_guardrail = Agent(
         name="weather_agent_v5_model_guardrail", # New version name for clarity
