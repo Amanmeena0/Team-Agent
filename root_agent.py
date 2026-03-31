@@ -8,6 +8,9 @@ from google.adk.runners import Runner
 from Weather_agent import AgentAsync
 import asyncio
 
+APP_NAME = "weather_tutorial_agent_team"
+USER_ID = "user_1_agent_team"
+SESSION_ID = "session_001_agent_team"
 
 def create_root_agent():
     greeting = sub_agent.greeting_agent()
@@ -34,10 +37,6 @@ async def run_team_conversation():
     print("\n --- Testing Agent Team Delegation --- ")
 
     session_service = InMemorySessionService()
-
-    APP_NAME = "weather_tutorial_agent_team"
-    USER_ID = "user_1_agent_team"
-    SESSION_ID = "session_001_agent_team"
 
     await session_service.create_session(
         app_name=APP_NAME,
