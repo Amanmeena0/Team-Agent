@@ -5,7 +5,7 @@ from redifiningRootAgent import runner_root_stateful
 from Weather_agent import AgentAsync 
 from Session import USER_ID_STATEFUL, SESSION_ID_STATEFUL,session_service_stateful,APP_NAME
 
-call_agent_async = AgentAsync.call_agent_async()
+
 
 async def run_conversation():
     # Ensure the stateful runner (runner_root_stateful) is available from the previous cell
@@ -16,10 +16,14 @@ async def run_conversation():
         # The 'await' keywords INSIDE this function are necessary for async operations.
         async def run_stateful_conversation():
             print("\n--- Testing State: Temp Unit Conversion & output_key ---")
-
+            await session_service_stateful.create_session(
+                app_name=APP_NAME,
+                user_id=USER_ID_STATEFUL,
+                session_id=SESSION_ID_STATEFUL
+            )
             # 1. Check weather (Uses initial state: Celsius)
             print("--- Turn 1: Requesting weather in London (expect Celsius) ---")
-            await call_agent_async(query= "What's the weather in London?",
+            await AgentAsync.call_agent_async(query= "What's the weather in London?",
                                 runner=runner_root_stateful,
                                 user_id=USER_ID_STATEFUL,
                                 session_id=SESSION_ID_STATEFUL
@@ -46,7 +50,7 @@ async def run_conversation():
             # 3. Check weather again (Tool should now use Fahrenheit)
             # This will also update 'last_weather_report' via output_key
             print("\n--- Turn 2: Requesting weather in New York (expect Fahrenheit) ---")
-            await call_agent_async(query= "Tell me the weather in New York.",
+            await AgentAsync.call_agent_async(query= "Tell me the weather in New York.",
                                 runner=runner_root_stateful,
                                 user_id=USER_ID_STATEFUL,
                                 session_id=SESSION_ID_STATEFUL
@@ -55,7 +59,7 @@ async def run_conversation():
             # 4. Test basic delegation (should still work)
             # This will update 'last_weather_report' again, overwriting the NY weather report
             print("\n--- Turn 3: Sending a greeting ---")
-            await call_agent_async(query= "Hi!",
+            await AgentAsync.call_agent_async(query= "Hi!",
                                 runner=runner_root_stateful,
                                 user_id=USER_ID_STATEFUL,
                                 session_id=SESSION_ID_STATEFUL
@@ -106,3 +110,7 @@ async def run_conversation():
 
     else:
         print("\n⚠️ Skipping state test conversation. Stateful root agent runner ('runner_root_stateful') is not available.")
+
+
+if __name__ == "__main__":
+    asyncio.run(run_conversation())
