@@ -14,7 +14,13 @@ from BothGuardrailAgent import runner_root_tool_guardrail
 
 async def run_tool_guardrail_test():
     print("\n--- Testing Tool Argument Guardrail ('Paris' blocked) ---")
-
+     # ✅ STEP 1: CREATE SESSION (MANDATORY)
+    await session_service_stateful.create_session(
+        app_name=APP_NAME,
+        user_id=USER_ID_STATEFUL,
+        session_id=SESSION_ID_STATEFUL
+    )
+    
     interaction_func = lambda query: AgentAsync.call_agent_async(
         query,
         runner_root_tool_guardrail,
