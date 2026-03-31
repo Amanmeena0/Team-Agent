@@ -1,13 +1,15 @@
 from google.adk.sessions import InMemorySessionService
 from root_agent import APP_NAME
 
+session_service_stateful = InMemorySessionService()
+SESSION_ID_STATEFUL = "session_state_demo_001"
+USER_ID_STATEFUL = "user_state_demo"
+
+print("New InMemorySessionService created for state demonstartion")
+
 async def session():
-    session_service_stateful = InMemorySessionService()
-    print("New InMemorySessionService created for state demonstartion")
 
-    SESSION_ID_STATEFUL = "session_state_demo_001"
-    USER_ID_STATEFUL = "user_state_demo"
-
+    
     initial_state = {
         "user_prefernce_temperature_unit":"Celsius"
     }
